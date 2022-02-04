@@ -5,7 +5,7 @@ module.exports = () => {
    const app = express();
 
    consign()
-      .include('./src/controllers')
+      .include('./src/app/controllers')
       .into(app);
 
    return app;
