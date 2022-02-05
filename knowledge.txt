@@ -1,0 +1,10 @@
+check curl version;
+->curl --version
+
+knowing informations about website;
+->curl -I www.totvs.com.br
+
+Do GET
+->curl http://localhost:3000/atendimentos
+
+Do POST
