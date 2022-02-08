@@ -1,11 +1,21 @@
 const express = require('./src/config/express.js');
 const connection = require('./src/infra/connection.js');
+const Table = require('./src/infra/Table.js');
 
 return new Promise((resolve, reject) => {
    connection.connect((error) => {
       if (error)
          reject('Error on connect to mysql');
-      resolve(listen(express));
+      
+      Table.start(connection);
+
+      Table.createAtendimentos()
+      .then( (successfully) => {
+         console.log(successfully);
+         resolve(listen(express));
+      }).catch((error) => {
+         console.log(error);
+      });      
    });
 });
 
