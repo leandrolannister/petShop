@@ -6,25 +6,24 @@ return new Promise((resolve, reject) => {
    connection.connect((error) => {
       if (error)
          reject('Error on connect to mysql');
-      
-      Table.start(connection);
-
-      Table.createAtendimentos()
-      .then( (successfully) => {
-         console.log(successfully);
-         resolve(listen(express));
-      }).catch((error) => {
-         console.log(error);
-      });      
+      resolve(createTable(connection));  
    });
 });
 
-function listen(express) {
+function createTable(connection) {
+   Table.start(connection);
+
+   Table.createAtendimentos()
+   .then( () => {
+      listen(express);     
+   }).catch((error) => {
+      console.log(error);
+   });
+}
+
+function listen(express) {   
    const app = express();
    app.listen(3000, () => {
       console.log('Server is running at 3000');
    });
 }
-
-
-
