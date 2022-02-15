@@ -15,9 +15,9 @@ module.exports = app => {
         
         atendimento.store(req.body)
         .then((success) => {
-            return res.status(200).json(success);
+            return res.status(200).json({message: `success`});
         }).catch((error) => {
-            return res.status(500).json(error);
+            return res.status(500).json({error: `${error}`});
         });       
     });
 }
