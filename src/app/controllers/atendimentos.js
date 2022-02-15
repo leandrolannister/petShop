@@ -1,32 +1,27 @@
-module.exports = app => {
+const moment = require('moment');
+const Atendimento = require('../model/Atendimentos.js');
+const Helper = require('../help/Helper.js');
 
-    let moment = require('moment');
-
-    let Atendimento = require('../model/Atendimentos.js');
-    let atendimento = new Atendimento();
-
-    let Helper = require('../help/Helper.js');
-    let helper = new Helper();
-
+module.exports = app => {   
     app.get('/atendimentos', (req, res) => {
         res.send('Welcome to route atendimento');
     });
 
     app.post('/atendimentos', (req, res) => {
-        
-        helper.validadeNome(req.body.cliente).then(() => {
-
+        let helper = new Helper(); 
+        helper.validadeNome(req.body.cliente).then((log) => {
             const dtAtendimento = moment().format('YYYY-MM-DD HH:MM:SS');
             req.body = { ...req.body, dtAtendimento }
-
+            
+            let atendimento = new Atendimento();  
             atendimento.store(req.body).then((success) => {
-                return res.status(200).json({ message: `success` });
+                return res.status(200).json({ message: `${success}` });
             }).catch((error) => {
                 return res.status(500).json({ error: `${error}` });
             });
 
         }).catch((error) => {
-            return res.status(204).json({ error: `${error}` });
-        })
+            return res.status(204).json({ message: `${error}` });
+        });
     });
 }
