@@ -9,7 +9,7 @@ class Table {
             const sql = "CREATE TABLE IF NOT EXISTS atendimentos(id int auto_increment primary key," +
                 "cliente varchar(50) not null, pet varchar(20)," +
                 "servico varchar(20) not null,status varchar(20) not null," +
-                "dtAtendimento datetime not null," +
+                "dtAtendimento datetime not null," +                
                 "observacoes text)";
 
             this._connection.query(sql, (error) => {
