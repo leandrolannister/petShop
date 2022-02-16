@@ -15,6 +15,19 @@ class Atendimentos {
             });
         });
     }
+
+    show(){
+        let sql = "SELECT * FROM atendimentos";
+        return new Promise((resolve,reject) => {
+           this._connection.query(sql, (error,data) => {
+              if (error)
+                reject(`Error on show: ${error}`);
+              resolve(data);   
+           });    
+        });
+    }
+
+    
 }
 
 module.exports = Atendimentos;
