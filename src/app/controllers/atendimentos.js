@@ -14,6 +14,15 @@ module.exports = app => {
         });
     });
 
+    app.get('/atendimentos/:id', (req,res) => {
+        const { id } = req.params;
+        atendimento.seek(id).then((data) => {
+            res.status(400).json(data);
+        }).catch((error) => {
+            res.status(400).json({error: `${error}`});
+        }); 
+    });
+
     app.post('/atendimentos', (req, res) => {
         let helper = new Helper();
         helper.validadeNome(req.body.cliente).then((log) => {

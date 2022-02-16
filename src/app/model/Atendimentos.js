@@ -27,7 +27,18 @@ class Atendimentos {
         });
     }
 
-    
+    seek(cod){
+        let id = parseInt(cod);
+        let sql = `SELECT * FROM atendimentos where id in(${id})`;
+        return new Promise((resolve,reject) => {
+            this._connection.query(sql, (error,result) => {
+                let data = result.pop();
+                if (error)
+                  reject(`Error on seek: ${error}`);
+                resolve(data);  
+            });
+        });
+    }
 }
 
 module.exports = Atendimentos;
