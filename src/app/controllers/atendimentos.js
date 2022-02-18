@@ -5,6 +5,7 @@ const Helper = require('../help/Helper.js');
 module.exports = app => {
 
     let atendimento = new Atendimento();
+    let helper = new Helper();
 
     app.get('/atendimentos', (req, res) => {
         atendimento.show().then((data) => {
@@ -24,7 +25,7 @@ module.exports = app => {
     });
 
     app.post('/atendimentos', (req, res) => {
-        let helper = new Helper();
+        
         helper.validadeNome(req.body.cliente).then((log) => {
             const dtAtendimento = moment().format('YYYY-MM-DD HH:MM:SS');
             req.body = { ...req.body, dtAtendimento }
@@ -37,6 +38,25 @@ module.exports = app => {
 
         }).catch((error) => {
             return res.status(204).json({ message: `${error}` });
+        });
+    });
+
+    app.patch('/atendimentos/:id', (req,res) => {
+        const { id } = req.params;
+
+               
+        Helper.validateId(id).then((id) => {
+           
+          req.body = {...req.body, id}
+
+           atendimento.update(req.body).then((success) => {
+              res.status(200).json({message: `Registro atualizado com sucesso!`}); 
+           }).catch((error) => {
+              res.status(400).json({message:`${error}`});
+           });
+        
+        }).catch((error) => {
+            res.status(201).json({message:error});
         });
     });
 }

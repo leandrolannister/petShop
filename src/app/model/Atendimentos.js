@@ -39,6 +39,24 @@ class Atendimentos {
             });
         });
     }
+
+    update(data){
+        return new Promise((resolve,reject) => {
+            let sql = `update atendimentos set
+                         cliente = ?
+                       where id in (?)`;
+            
+            this._connection.query(sql,[
+               data.cliente,
+               data.id
+               ],
+               (error,result) => {
+                  if (error)
+                     reject(`Error on method update:${error}`);
+                  resolve(result);      
+                });            
+        });
+    }
 }
 
 module.exports = Atendimentos;
