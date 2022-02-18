@@ -57,4 +57,18 @@ module.exports = app => {
             res.status(201).json({message:error});
         });
     });
+
+    app.delete('/atendimentos/:id', (req,res) => {
+        const {id} = req.params;
+        
+        Helper.validateId(id).then((success) => {
+            atendimento.delete(id).then((sucess) => {
+                return res.status(200).json("Registro removido");
+            }).catch((error) => {
+                return res.status(201).json({message:error});
+            });
+        }).catch((error) => {
+            return res.status(201).json({message:error});
+        });
+    });
 }

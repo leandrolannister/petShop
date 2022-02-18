@@ -57,6 +57,17 @@ class Atendimentos {
                 });            
         });
     }
+
+    delete(id){
+        return new Promise((resolve,reject) => {
+            let sql = "delete from atendimentos where id in(?)";
+            this._connection.query(sql,[id], (error, success) => {
+                if (error)
+                  reject(`Error on method delete: ${error}`);
+                resolve(success);  
+            });
+        });
+    }
 }
 
 module.exports = Atendimentos;
