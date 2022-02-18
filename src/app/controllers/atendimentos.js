@@ -43,10 +43,8 @@ module.exports = app => {
 
     app.patch('/atendimentos/:id', (req,res) => {
         const { id } = req.params;
-
                
-        Helper.validateId(id).then((id) => {
-           
+        Helper.validateId(id).then((id) => {           
           req.body = {...req.body, id}
 
            atendimento.update(req.body).then((success) => {
